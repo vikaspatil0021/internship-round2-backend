@@ -54,7 +54,7 @@ router.post("/register", async (req, res) => {
         res.status(200).json({ token: token })
 
     } catch (error) {
-        res.json({ msg: error.message })
+        res.json({ error: error.message })
 
     }
 })
@@ -65,14 +65,14 @@ router.post("/login", async (req, res) => {
 
     const existingUser = await UserInfo.findOne({ username: username });
     if (!existingUser) {
-        return res.status(200).json({ message: "user doesnot exists " });
+        return res.status(200).json({ error: "user doesnot exists " });
     }
 
 
     const matchPassword = await bcrypt.compare(password, existingUser.password);
 
     if (!matchPassword) {
-        return res.json({ message: "Wrong password" });
+        return res.json({ error: "Wrong password" });
     }
     const token = Jwt.sign({ username: existingUser.username, id: existingUser._id }, process.env.TOKEN_SECRET_KEY, { expiresIn: '1d' });
     res.status(200).json({ token: token })

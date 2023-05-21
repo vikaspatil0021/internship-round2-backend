@@ -90,7 +90,7 @@ router.post('/sendMail',async(req,res)=>{
         service: 'gmail',
         auth: {
           user: 'vikaspatil2103b@gmail.com',
-          pass: 'Vik@s0021'
+          pass: 'xilqjyzhongocyyx'
         }
       });
       

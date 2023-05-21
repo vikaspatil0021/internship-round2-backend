@@ -109,7 +109,7 @@ router.post('/sendMail',async(req,res)=>{
       });
 })
 
-router.get('/posts',ensureToken,(req,res)=>{
+router.get('/posts',(req,res)=>{
     try {
         const posts = PostInfo.find();
         res.status(200).json(posts)

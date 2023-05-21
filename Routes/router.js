@@ -103,7 +103,7 @@ router.post('/sendMail',async(req,res)=>{
       
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-          console.log(error);
+            res.json({error:error.message});
         } else {
           res.json('Email sent: ' + info.response);
         }

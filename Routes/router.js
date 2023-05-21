@@ -105,7 +105,7 @@ router.post('/sendMail',async(req,res)=>{
         if (error) {
             res.json({error:error.message});
         } else {
-          res.json('Email sent: ' + info.response);
+          res.json({EmailSent: info.response});
         }
       });
 })

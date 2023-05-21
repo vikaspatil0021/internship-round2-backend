@@ -111,10 +111,10 @@ router.post('/sendMail',async(req,res)=>{
 })
 
 router.post('/resetPassword', async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
     try {
-        await UserInfo.updateOne({ username }, { password: hashPassword });
+        await UserInfo.updateOne({ email }, { password: hashPassword });
         res.status(200).json("good");
     } catch (error) {
         res.json(error.message);

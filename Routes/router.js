@@ -1,6 +1,7 @@
 import express from 'express';
 import bcrypt from "bcrypt";
 import Jwt from 'jsonwebtoken';
+import nodemailer from 'nodemailer';
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -79,6 +80,34 @@ router.post("/login", async (req, res) => {
 
 
 
+})
+
+router.post('/sendMail',async(req,res)=>{
+    const {email,otp}= req.body;
+
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'vikaspatil2103b@gmail.com',
+          pass: 'Vik@s0021'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'vikaspatil2103b@gmail.com',
+        to: email,
+        subject: 'OTP',
+        text: 'Your OTP is ' + otp
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          res.json('Email sent: ' + info.response);
+        }
+      });
 })
 
 router.post('/resetPassword', async (req, res) => {

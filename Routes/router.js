@@ -10,7 +10,28 @@ import { UserInfo, PostInfo } from '../models/models.js';
 
 const router = express.Router();
 
+const ensureToken = (req, res, next) => {
+    const bHeader = req.headers["authorization"];
+    if (typeof bHeader != 'undefined') {
+        const bToken = (bHeader.split(' '))[1];
+        req.token = bToken;
 
+        next();
+    } else {
+        res.status(403).json({ msg: "Invalid Token" });
+    }
+}
+
+// verifying the token
+const verifyToken = (token) => {
+    return Jwt.verify(token, process.env.TOKEN_SECRET_KEY, (err, data) => {
+        if (err) {
+            return { err: err.message };
+        } else {
+            return data;
+        }
+    })
+}
 
 router.post("/register", async (req, res) => {
 
@@ -88,7 +109,7 @@ router.post('/sendMail',async(req,res)=>{
       });
 })
 
-router.get('/posts',(req,res)=>{
+router.get('/posts',ensureToken,(req,res)=>{
     try {
         const posts = PostInfo.find();
         res.status(200).json(posts)

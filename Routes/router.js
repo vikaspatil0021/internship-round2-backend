@@ -140,7 +140,7 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
                 res.json({ message: " New Post created" })
 
             } else if (action === 'update') {
-                await PostInfo.updateOne({ _id: data.Id }, { title: data.title, imageURL: data.imageURL });
+                await PostInfo.updateOne({ _id: data._id }, { title: data.title, imageURL: data.imageURL });
                 res.json("Post Updated")
 
             }else if (action === 'delete') {

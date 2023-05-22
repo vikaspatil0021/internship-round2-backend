@@ -144,7 +144,7 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
                 res.json("Post Updated")
 
             }else if (action === 'delete') {
-                await PostInfo.deleteOne({ _id: data.Id });
+                await PostInfo.deleteOne({ _id: data._id });
                 res.json("Post deleted")
 
             }

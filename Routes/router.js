@@ -81,32 +81,32 @@ router.post("/login", async (req, res) => {
 
 })
 
-router.post('/sendMail',async(req,res)=>{
-    const {email,otp}= req.body;
+router.post('/sendMail', async (req, res) => {
+    const { email, otp } = req.body;
 
 
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-          user: 'vikaspatil2103b@gmail.com',
-          pass: 'xilqjyzhongocyyx'
+            user: 'vikaspatil2103b@gmail.com',
+            pass: 'xilqjyzhongocyyx'
         }
-      });
-      
-      var mailOptions = {
+    });
+
+    var mailOptions = {
         from: 'vikaspatil2103b@gmail.com',
         to: email,
         subject: 'OTP',
         text: 'Your OTP is ' + otp
-      };
-      
-      transporter.sendMail(mailOptions, function(error, info){
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            res.json({error:error.message});
+            res.json({ error: error.message });
         } else {
-          res.json({EmailSent: info.response});
+            res.json({ EmailSent: info.response });
         }
-      });
+    });
 })
 
 router.post('/resetPassword', async (req, res) => {
@@ -132,7 +132,7 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
             if (action === 'create') {
 
                 const newPost = new PostInfo({
-                    username:foundUser.username,
+                    username: foundUser.username,
                     ...data
 
                 })
@@ -143,7 +143,7 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
                 await PostInfo.updateOne({ _id: data._id }, { title: data.title, imgURL: data.imgURL });
                 res.json("Post Updated")
 
-            }else if (action === 'delete') {
+            } else if (action === 'delete') {
                 await PostInfo.deleteOne({ _id: data._id });
                 res.json("Post deleted")
 
@@ -160,7 +160,22 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
 
 });
 
-router.get('/posts',async(req,res)=>{
+router.post("/updateLikes", ensureToken, async (req, res) => {
+    try {
+        let data = req.body.data;
+        if (verifyToken(req.token)) {
+
+            await PostInfo.updateOne({ _id: data._id }, { likes: data.likes });
+            res.json("updatedLikes");
+        } else {
+            res.status(403).json('Invalid Token')
+        }
+    } catch (err) {
+        res.json(err)
+    }
+})
+
+router.get('/posts', async (req, res) => {
     try {
         const posts = await PostInfo.find();
         res.status(200).json(posts)

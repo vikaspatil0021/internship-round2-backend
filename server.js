@@ -11,7 +11,7 @@ import cors from "cors";
 const corsOptions = {
     credentials: true,            //access-control-allow-credentials:true
     optionSuccessStatus: 200,
-    origin: ["http://localhost:3000"]
+    origin: ["http://localhost:3000","https://internship-round2.vercel.app"]
 
 }
 

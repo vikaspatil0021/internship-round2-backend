@@ -13,7 +13,7 @@ const postSchema = mongoose.Schema({
     username:String,
     comment:[],
     likes:[],
-    imageURL:String
+    imgURL:String
 })
 
 const UserInfo = mongoose.model("user",userSchema);

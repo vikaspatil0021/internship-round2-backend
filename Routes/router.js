@@ -109,16 +109,6 @@ router.post('/sendMail',async(req,res)=>{
       });
 })
 
-router.get('/posts',(req,res)=>{
-    try {
-        const posts = PostInfo.find();
-        res.status(200).json(posts)
-    } catch (error) {
-        res.json(error.message);
-
-    }
-})
-
 router.post('/resetPassword', async (req, res) => {
     const { email, password } = req.body;
     const hashPassword = await bcrypt.hash(password, 10);
@@ -164,10 +154,20 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
 
 
     } catch (error) {
-        res.status(200).json(error)
+        res.status(200).json(error.message)
     }
 
 
+});
+
+router.get('/posts',(req,res)=>{
+    try {
+        const posts = PostInfo.find();
+        res.status(200).json(posts)
+    } catch (error) {
+        res.json(error.message);
+
+    }
 })
 
 export default router;

@@ -160,9 +160,9 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
 
 });
 
-router.get('/posts',(req,res)=>{
+router.get('/posts',async(req,res)=>{
     try {
-        const posts = PostInfo.find();
+        const posts = await PostInfo.find();
         res.status(200).json(posts)
     } catch (error) {
         res.json(error.message);

@@ -173,6 +173,22 @@ router.post("/updateLikes", ensureToken, async (req, res) => {
     } catch (err) {
         res.json(err)
     }
+});
+
+router.post('/comment', ensureToken, async(req,res)=>{
+    try {
+        let data = req.body.data;
+
+        if (verifyToken(req.token)) {
+            await PostInfo.updateOne({ _id: data._id }, { comment: data.comment });
+            res.json("updated comment");
+            
+        } else {
+            res.status(403).json('Invalid Token')
+        }
+    } catch (error) {
+        res.json(err)
+    }
 })
 
 router.get('/posts', async (req, res) => {

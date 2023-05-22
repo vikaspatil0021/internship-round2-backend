@@ -132,7 +132,7 @@ router.post('/post/crud/:action', ensureToken, async (req, res) => {
             if (action === 'create') {
 
                 const newPost = new PostInfo({
-                    userId:foundUser._id,
+                    username:foundUser.username,
                     ...data
 
                 })

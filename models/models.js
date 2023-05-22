@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
 
 const postSchema = mongoose.Schema({
     title:String,
-    userId:String,
+    username:String,
     comment:[],
     likes:[],
     imageURL:String
